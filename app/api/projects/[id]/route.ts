@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cloudinary } from '@/lib/cloudinary';
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-  const id = params.id;
+// ✅ Fixed signature
+export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+  const id = context.params.id;
   const formData = await req.formData();
+
   const name = formData.get('name') as string;
   const tech = (formData.get('tech') as string).split(',').map(t => t.trim());
   const live = formData.get('live') as string;
@@ -43,8 +45,11 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   return NextResponse.json(updated);
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
-  const id = params.id;
+// ✅ Fixed signature
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+  const id = context.params.id;
+
   await prisma.project.delete({ where: { id } });
+
   return NextResponse.json({ message: 'Deleted' });
 }
