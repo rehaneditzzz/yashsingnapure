@@ -33,7 +33,7 @@ export default function About() {
               <Image
                 src={profileImg}
                 alt="Profile"
-                className="absolute top-1/2 left-1/2 w-[60%] h-[60%] sm:w-[55%] sm:h-[55%] md:w-[75%] md:h-[75%] rounded-full object-cover border-2 border-white shadow-xl transform -translate-x-1/2 -translate-y-1/2"
+                className="absolute top-1/2 left-1/2 w-[60%] h-[60%] sm:w-[55%] sm:h-[55%] md:w-[75%] md:h-[75%] rounded-full object-cover border border-white shadow-xl transform -translate-x-1/2 -translate-y-1/2"
                 width={300}
                 height={300}
               />

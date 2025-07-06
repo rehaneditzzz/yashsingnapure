@@ -32,10 +32,11 @@ export default function Projects() {
               {/* Parallax image with glow */}
               <div className="relative h-44 overflow-hidden rounded-xl mb-4">
                 <img
-                  src={proj.img}
+                  src={proj.img.replace("/upload/", "/upload/f_auto,q_auto/")}
                   alt={proj.name}
-                  className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500 ease-in-out"
+                  className="w-full h-full object-cover"
                 />
+
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-all"></div>
               </div>
 
@@ -49,7 +50,12 @@ export default function Projects() {
 
               {/* Buttons */}
               <div className="mt-5 flex gap-2 justify-between">
-                <a href={proj.live} target="_blank" rel="noopener noreferrer" className="flex-1">
+                <a
+                  href={proj.live}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
                   <Button
                     variant="ghost"
                     className="w-full text-sm border border-fuchsia-500/30 text-fuchsia-300 hover:bg-fuchsia-500/10 transition-all"
@@ -57,7 +63,12 @@ export default function Projects() {
                     Live <CircleArrowOutUpRight size={14} className="ml-1" />
                   </Button>
                 </a>
-                <a href={proj.code} target="_blank" rel="noopener noreferrer" className="flex-1">
+                <a
+                  href={proj.code}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
                   <Button
                     variant="ghost"
                     className="w-full text-sm border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/10 transition-all"

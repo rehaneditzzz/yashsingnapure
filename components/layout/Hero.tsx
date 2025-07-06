@@ -25,17 +25,17 @@ const techIcons = [
   {
     src: "/images/icon3.png",
     alt: "JavaScript",
-    style: { bottom: "25%", left: "12%" },
+    style: { bottom: "24%", left: "12%" },
   },
   {
     src: "/images/icon4.png",
     alt: "Photoshop",
-    style: { bottom: "25%", left: "35%" },
+    style: { bottom: "24%", left: "35%" },
   },
   {
     src: "/images/icon9.png",
     alt: "VSCode",
-    style: { bottom: "25%", left: "40%" },
+    style: { bottom: "24%", left: "40%" },
   },
   {
     src: "/images/icon7.png",
@@ -77,16 +77,20 @@ export default function Hero() {
       {/* Main Content Grid */}
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 xl:grid-cols-2 gap-10 items-center">
         {/* Left Side — Intro Text */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-3">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-            Transforming Ideas into{" "}
+            Hey, This is{" "}
             <span className="bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 bg-clip-text text-transparent">
-              Beautiful Code
+              {/* Beautiful Code */}
+                Yash Singnapure 
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-white/80">
-            I'm Yash — A full-stack developer crafting performant and modern
-            digital experiences.
+          <p className="text-sm md:text-lg text-white/80">
+           — a Full-Stack developer who blends functionality with design.
+Specialize in the MERN stack, creating clean interfaces and powerful back-end systems.
+Looking to collaborate or work on meaningful projects? <span className="bg-gradient-to-r from-cyan-400 via-green-500 to-blue-500 bg-clip-text text-transparent">
+                Let’s talk.👇🏻
+            </span>
           </p>
 
           {/* Call-to-Action Buttons */}
@@ -110,7 +114,7 @@ export default function Hero() {
           {/* Avatar Card */}
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-xl p-6 flex flex-col items-center text-center">
             <img
-              src="/images/1000178703 (1).png"
+              src="/images/dp.png"
               alt="Yash Singnapure"
               className="w-28 h-28 rounded-full object-cover border-white mb-4"
             />

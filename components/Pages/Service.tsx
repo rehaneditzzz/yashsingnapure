@@ -16,7 +16,7 @@ export default function Services() {
             <span className="text-white/80">Some of </span>
             <span className="bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">My Work</span>
           </h2>
-          <a href="#" className="text-blue-400 hover:underline">View All →</a>
+          <a href="#" className="bg-gradient-to-r from-cyan-400 via-green-500 to-blue-500 bg-clip-text text-transparent">View All →</a>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {services.map((s) => (

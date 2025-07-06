@@ -20,14 +20,29 @@ export async function POST(req: NextRequest) {
 
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  const upload = await new Promise<any>((res, rej) =>
-    cloudinary.uploader.upload_stream({ folder: 'services' }, (err, result) =>
-      err ? rej(err) : res(result)
-    ).end(buffer)
-  );
+  const upload = await new Promise<any>((resolve, reject) => {
+    cloudinary.uploader.upload_stream(
+      {
+        folder: 'services',
+        resource_type: 'image',
+        format: 'webp',
+        transformation: [{ quality: 'auto' }],
+      },
+      (err, result) => {
+        if (err) reject(err);
+        else resolve(result);
+      }
+    ).end(buffer);
+  });
 
   const service = await prisma.service.create({
-    data: { title, description, isCode, image: upload.secure_url },
+    data: {
+      title,
+      description,
+      isCode,
+      image: upload.secure_url,
+    },
   });
+
   return NextResponse.json(service, { status: 201 });
 }

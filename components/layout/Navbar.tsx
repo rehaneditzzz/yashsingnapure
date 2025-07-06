@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Disclosure } from "@headlessui/react";
+import { useUser } from "@clerk/nextjs";
 
 
 import {
@@ -17,6 +18,9 @@ import { useContactModal } from "@/lib/store/contactModalStore";
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
+  const { user } = useUser();
+const isAdmin = user?.id === process.env.NEXT_PUBLIC_ADMIN_ID;
+
     const { openModal } = useContactModal();
 
 
@@ -58,7 +62,7 @@ export default function Navbar() {
               {/* Desktop Menu + Theme + User */}
               <div className="hidden sm:flex items-center gap-6">
                 {/* Navigation Links */}
-                <ul className="flex gap-6 text-base font-medium">
+                <ul className="flex gap-6  ">
                   <li><a href="#" className="hover:text-white/80 transition">Home</a></li>
                   <li><a href="#projects" className="hover:text-white/80 transition">Projects</a></li>
                   <li><a href="#services" className="hover:text-white/80 transition">Services</a></li>
@@ -91,12 +95,15 @@ export default function Navbar() {
                   }}
                 />
 
-              <Link href="/admin">
-                <div className="flex items-center gap-2">
-                <Button variant="ghost">Admin Dashboard</Button>
               </div>
-              </Link>
-              </div>
+             {isAdmin && (
+  <Link href="/admin">
+    <div className="flex items-center gap-2">
+      <Button variant="ghost">Admin Dashboard</Button>
+    </div>
+  </Link>
+)}
+
             </div>
           </div>
 

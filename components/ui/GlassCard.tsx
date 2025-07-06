@@ -30,7 +30,7 @@ export default function GlassCard({
         <div>
           <div className="w-full h-35 relative rounded-xl overflow-hidden mb-4 border border-white/10">
             <Image
-              src={image}
+              src={image.replace("/upload/", "/upload/f_auto,q_auto/")}
               alt={title}
               fill
               className="object-cover rounded-xl"

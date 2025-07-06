@@ -1,39 +1,32 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cloudinary } from '@/lib/cloudinary';
 
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
-
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+  const id = params.id;
   const formData = await req.formData();
   const name = formData.get('name') as string;
-  const tech = (formData.get('tech') as string)?.split(',').map((t) => t.trim());
+  const tech = (formData.get('tech') as string).split(',').map(t => t.trim());
   const live = formData.get('live') as string;
   const code = formData.get('code') as string;
-  const image = formData.get('image') as File | null;
+  const file = formData.get('image') as File | null;
 
-  if (!name || !tech || !live || !code) {
-    return NextResponse.json({ error: 'Missing fields' }, { status: 400 });
-  }
+  let img: string | undefined;
 
-  let imgUrl: string | undefined = undefined;
-
-  if (image && image.size > 0) {
-    const bytes = await image.arrayBuffer();
+  if (file && file.size > 0) {
+    const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-
     const upload = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload_stream(
         { folder: 'portfolio_projects' },
-        function (error, result) {
-          if (error) return reject(error);
+        (err, result) => {
+          if (err) return reject(err);
           resolve(result);
         }
       ).end(buffer);
     });
 
-    const result = upload as { secure_url: string };
-    imgUrl = result.secure_url;
+    img = (upload as { secure_url: string }).secure_url;
   }
 
   const updated = await prisma.project.update({
@@ -43,9 +36,15 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
       tech,
       live,
       code,
-      ...(imgUrl && { img: imgUrl }),
+      ...(img && { img }),
     },
   });
 
   return NextResponse.json(updated);
+}
+
+export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+  const id = params.id;
+  await prisma.project.delete({ where: { id } });
+  return NextResponse.json({ message: 'Deleted' });
 }
