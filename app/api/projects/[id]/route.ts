@@ -1,14 +1,12 @@
-// ✅ Do NOT use custom types for context argument
-// ✅ Use inline typing exactly like this
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cloudinary } from '@/lib/cloudinary';
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> } // ✅ `params` must be a Promise!
 ) {
-  const id = params.id;
+  const { id } = await context.params;
   const formData = await req.formData();
 
   const name = formData.get('name') as string;
@@ -18,29 +16,20 @@ export async function PUT(
   const file = formData.get('image') as File | null;
 
   let img: string | undefined;
-
   if (file && file.size > 0) {
     const buffer = Buffer.from(await file.arrayBuffer());
-
     const upload: any = await new Promise((res, rej) =>
       cloudinary.uploader.upload_stream(
         { folder: 'portfolio_projects' },
         (err, result) => (err ? rej(err) : res(result))
       ).end(buffer)
     );
-
     img = upload.secure_url;
   }
 
   const updated = await prisma.project.update({
     where: { id },
-    data: {
-      name,
-      tech,
-      live,
-      code,
-      ...(img && { img }),
-    },
+    data: { name, tech, live, code, ...(img && { img }) },
   });
 
   return NextResponse.json(updated);
@@ -48,9 +37,9 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> } // ✅ Promise here too
 ) {
-  const id = params.id;
+  const { id } = await context.params;
   await prisma.project.delete({ where: { id } });
   return NextResponse.json({ message: 'Deleted' });
 }

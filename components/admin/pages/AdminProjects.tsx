@@ -1,20 +1,3 @@
-'use client';
-// import React from 'react'
-
-// export default function AdminProjects() {
-//   return (
-// <main>
-//   <h1 className='text-2xl pb-2'>Projects</h1>
-//  <div className='grid lg:grid-cols-2 gap-2 h-full '>
-//    {/* First section */}
-//   <section className='bg-red-600'>Get all Projects</section>
-//   {/* Second Section */}
-//   <section className='bg-green-500'>Create New Project</section>
-//  </div>
-// </main>
-//   )
-// }
-
 
 'use client';
 

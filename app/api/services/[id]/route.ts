@@ -2,12 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cloudinary } from '@/lib/cloudinary';
 
-// ❗ Do not use custom RouteContext type
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> } // ✅ Use Promise wrapper
 ) {
-  const { id } = params;
+  const { id } = await context.params;
 
   await prisma.service.delete({ where: { id } });
   return NextResponse.json({ message: 'Deleted' });
@@ -15,9 +14,9 @@ export async function DELETE(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> } // ✅ Fix type signature
 ) {
-  const { id } = params;
+  const { id } = await context.params;
   const data = await req.formData();
 
   const title = data.get('title') as string;

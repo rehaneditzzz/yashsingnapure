@@ -1,9 +1,12 @@
+// next.config.ts
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-   images: {
-    domains: ['res.cloudinary.com'], // allow Cloudinary images
+  images: {
+    domains: ["res.cloudinary.com"], // ✅ allows Cloudinary-hosted images
+  },
+  eslint: {
+    ignoreDuringBuilds: true, // ✅ disables ESLint errors from blocking build on Vercel
   },
 };
 

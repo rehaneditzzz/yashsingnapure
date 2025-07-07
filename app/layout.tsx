@@ -5,8 +5,7 @@ import { dark, shadesOfPurple } from "@clerk/themes";
 // import { Inter } from 'next/font/google';
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { NotificationProvider } from "@/components/Pages/NotificationProvider";
-import ContactDialog from "@/components/Pages/ContactDialog";
+import ClientWrapper from "@/components/layout/ClientWrapper";
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -22,7 +21,6 @@ export const metadata = {
   description:
     "Welcome to the portfolio of Yash Singnapure — a passionate MERN Stack Developer and UI/UX enthusiast. Explore modern web projects, clean user interfaces, and powerful full-stack applications built with React, Node.js, MongoDB, Tailwind CSS, and more.",
 };
-
 
 export default function RootLayout({
   children,
@@ -40,15 +38,13 @@ export default function RootLayout({
         },
       }}
     >
-     
-        <html lang="en" className={poppins.className}>
-          <body>
-            {children}
+      <html lang="en" className={poppins.className}>
+        <body>
+          {children}
 
-            <ContactDialog />
-          </body>
-        </html>
-    
+          <ClientWrapper/>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

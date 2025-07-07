@@ -17,7 +17,18 @@ export default function GlassCard({
   description,
   image,
   isCode,
-}: GlassCardProps) {
+}: GlassCardProps) 
+
+
+{
+
+
+const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+const imgUrl = image.includes("res.cloudinary.com")
+  ? image.replace("/upload/", "/upload/f_auto,q_auto/")
+  : `https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/${image}`;
+
+
   return (
     <div className="relative group overflow-hidden w-full min-h-[300px] bg-white/1 backdrop-blur-md rounded-[30px] shadow-xl transition-transform transform hover:scale-[1.03] duration-300 border border-white/20">
       {/* Custom shape using clip-path */}
@@ -29,12 +40,13 @@ export default function GlassCard({
       <div className="relative z-10 flex flex-col h-full justify-between p-3 text-white">
         <div>
           <div className="w-full h-35 relative rounded-xl overflow-hidden mb-4 border border-white/10">
-            <Image
-              src={image.replace("/upload/", "/upload/f_auto,q_auto/")}
-              alt={title}
-              fill
-              className="object-cover rounded-xl"
-            />
+           <Image
+  src={imgUrl}
+  alt={title}
+  fill
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+  className="object-cover rounded-xl"
+/>
           </div>
           <h3 className="text-lg mb-1">{title}</h3>
           <p className="text-xs text-white/70">{description}</p>

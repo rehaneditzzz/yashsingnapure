@@ -12,8 +12,7 @@ import {
 import Link from 'next/link';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import clsx from 'clsx';
-import Navbar from '@/components/layout/Navbar';
+
 
 const navLinks = [
   { label: 'Projects', href: '/admin', icon: FolderKanban },
