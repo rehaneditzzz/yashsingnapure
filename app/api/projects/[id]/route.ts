@@ -1,3 +1,4 @@
+// app/api/projects/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cloudinary } from '@/lib/cloudinary';
@@ -16,6 +17,7 @@ export async function PUT(req: NextRequest, context: { params: { id: string } })
 
   if (file && file.size > 0) {
     const buffer = Buffer.from(await file.arrayBuffer());
+
     const upload: any = await new Promise((res, rej) =>
       cloudinary.uploader.upload_stream(
         { folder: 'portfolio_projects' },
