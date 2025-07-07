@@ -1,9 +1,15 @@
-// app/api/projects/[id]/route.ts
+// ✅ FIXED: Correct type for context as per Next.js App Router
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cloudinary } from '@/lib/cloudinary';
 
-export async function PUT(req: NextRequest, context: { params: { id: string } }) {
+type RouteContext = {
+  params: {
+    id: string;
+  };
+};
+
+export async function PUT(req: NextRequest, context: RouteContext) {
   const id = context.params.id;
   const formData = await req.formData();
 
@@ -42,7 +48,7 @@ export async function PUT(req: NextRequest, context: { params: { id: string } })
   return NextResponse.json(updated);
 }
 
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: RouteContext) {
   const id = context.params.id;
   await prisma.project.delete({ where: { id } });
   return NextResponse.json({ message: 'Deleted' });
