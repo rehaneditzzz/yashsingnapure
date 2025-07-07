@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cloudinary } from '@/lib/cloudinary';
 
-// ✅ Fixed signature
-export async function PUT(req: NextRequest, context: { params: { id: string } }) {
-  const id = context.params.id;
+// ✅ Fixed according to App Router standards
+export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+  const id = params.id;
   const formData = await req.formData();
 
   const name = formData.get('name') as string;
@@ -45,9 +45,8 @@ export async function PUT(req: NextRequest, context: { params: { id: string } })
   return NextResponse.json(updated);
 }
 
-// ✅ Fixed signature
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
-  const id = context.params.id;
+export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const id = params.id;
 
   await prisma.project.delete({ where: { id } });
 
