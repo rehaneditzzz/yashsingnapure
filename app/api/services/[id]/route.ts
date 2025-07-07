@@ -2,22 +2,22 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { cloudinary } from '@/lib/cloudinary';
 
-// ✅ Correct type expected by Next.js for route handlers
-type RouteContext = {
-  params: {
-    id: string;
-  };
-};
-
-export async function DELETE(req: NextRequest, context: RouteContext) {
-  const { id } = context.params;
+// ❗ Do not use custom RouteContext type
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
 
   await prisma.service.delete({ where: { id } });
   return NextResponse.json({ message: 'Deleted' });
 }
 
-export async function PUT(req: NextRequest, context: RouteContext) {
-  const { id } = context.params;
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
   const data = await req.formData();
 
   const title = data.get('title') as string;
