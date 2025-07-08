@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "postinstall": "prisma generate",
-  "vercel-build": "prisma generate && next build"
-}
-,
+    "dev": "next dev",
+    "build": "next build",
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && next build"
+  },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.13.23",
     "@clerk/nextjs": "^6.23.1",
     "@clerk/themes": "^2.2.52",
     "@headlessui/react": "^2.2.4",

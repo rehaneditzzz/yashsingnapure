@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkClient } from '@clerk/clerk-sdk-node'; // ✅ Correct Clerk SDK import
 
 const isPublicRoute = createRouteMatcher([
   '/',
@@ -9,16 +10,13 @@ const isPublicRoute = createRouteMatcher([
 export default clerkMiddleware(async (auth, req) => {
   if (isPublicRoute(req)) return;
 
-  await auth.protect();
+  const { sessionClaims, userId } = await auth(); // ✅ Await auth() properly
 
-  // 👇 Await session
-  const { sessionClaims } = await auth();
-
-  // ✅ Type assertion for publicMetadata
-  const role = (sessionClaims?.publicMetadata as { role?: string })?.role;
-
-  // ✅ Protect /admin route based on role
+  // ✅ Role-based check for /admin
   if (req.nextUrl.pathname.startsWith('/admin')) {
+    const user = await clerkClient.users.getUser(userId!);
+    const role = user.publicMetadata?.role;
+
     if (role !== 'admin') {
       return new Response('Unauthorized', { status: 403 });
     }
