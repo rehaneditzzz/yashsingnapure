@@ -96,10 +96,20 @@ const isAdmin = user?.publicMetadata?.role === "admin";
                 />
 
               </div>
-             {isAdmin && (
+             {/* Show only if user is authenticated and is admin */}
+{user && isAdmin && (
   <Link href="/admin">
     <div className="flex items-center gap-2">
       <Button variant="ghost">Admin Dashboard</Button>
+    </div>
+  </Link>
+)}
+
+{/* Show only if user is NOT authenticated */}
+{!user && (
+  <Link href="/sign-up">
+    <div className="flex items-center gap-2">
+      <Button variant="ghost">Sign Up</Button>
     </div>
   </Link>
 )}
