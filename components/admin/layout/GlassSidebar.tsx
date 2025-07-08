@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Menu,
@@ -8,19 +8,17 @@ import {
   PhoneCall,
   UserCircle2,
   CircleArrowLeft,
-} from 'lucide-react';
-import Link from 'next/link';
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
+} from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { label: 'Projects', href: '/admin', icon: FolderKanban },
-  { label: 'Services', href: '/admin/services', icon: LayoutDashboard },
-  { label: 'Contacts', href: '/admin/contact-messages', icon: PhoneCall },
-  { label: 'Profile', href: '/admin/profile', icon: UserCircle2 },
+  { label: "Projects", href: "/admin", icon: FolderKanban },
+  { label: "Services", href: "/admin/services", icon: LayoutDashboard },
+  { label: "Contacts", href: "/admin/contact-messages", icon: PhoneCall },
+  { label: "Profile", href: "/admin/profile", icon: UserCircle2 },
 ];
-
 
 export default function GlassDashboardLayout({
   children,
@@ -35,15 +33,16 @@ export default function GlassDashboardLayout({
       <AnimatePresence>
         {sidebarOpen && (
           <motion.aside
-  initial={{ x: '-100%' }}
-  animate={{ x: 0 }}
-  exit={{ x: '-100%' }}
-  transition={{ duration: 0.3 }}
-  className="fixed inset-y-0 left-0 z-50 w-64 bg-white/10 backdrop-blur-md border-r border-white/20 shadow-lg flex flex-col md:hidden"
->
-
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-y-0 left-0 z-50 w-64 bg-white/10 backdrop-blur-md border-r border-white/20 shadow-lg flex flex-col md:hidden"
+          >
             <div className="p-4 flex justify-between items-center border-b border-white/10">
-              <h2 className="text-xl font-bold">Admin</h2>
+              <Link href="/" className="cursor-pointer text-xl font-bold">Admin</Link>
+
+              
               <button
                 className="md:hidden"
                 onClick={() => setSidebarOpen(false)}
@@ -71,7 +70,9 @@ export default function GlassDashboardLayout({
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex md:flex-col w-64 bg-white/10 backdrop-blur-md border-r border-white/20 shadow-lg">
         <div className="p-4 border-b flex justify-evenly border-white/10">
-          <Link href="/" className="text-xl font-bold"><CircleArrowLeft /></Link>
+          <Link href="/" className="text-xl font-bold">
+            <CircleArrowLeft />
+          </Link>
           <h2 className="text-xl font-bold">Admin</h2>
         </div>
         <nav className="p-4 flex flex-col space-y-2">
@@ -98,7 +99,7 @@ export default function GlassDashboardLayout({
           >
             <Menu />
           </button>
-         {/* <div className=''>
+          {/* <div className=''>
              <Navbar/>
          </div> */}
           <h1 className="text-lg">Admin Dashboard Portfolio</h1>
@@ -106,9 +107,7 @@ export default function GlassDashboardLayout({
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-4">
-          {children}
-        </main>
+        <main className="flex-1 overflow-y-auto p-4">{children}</main>
       </div>
     </div>
   );
