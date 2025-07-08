@@ -46,7 +46,7 @@ export default function About() {
         </div>
 
         <div className="py-2">
-          <div className="flex text-neutral-600 font-bold w-full items-center justify-around text-center">
+          <div className="flex text-slate-600 font-bold w-full items-center justify-around text-center">
             <span>BASED IN NAGPUR</span>
             <span>DETAIL-ORIENTED</span>
             <span>CURIOUS</span>

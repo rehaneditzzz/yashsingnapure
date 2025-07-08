@@ -11,7 +11,7 @@ export default function Services() {
   return (
     <section className="py-8 px-4 md:px-10">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between mb-8">
+        <div className="flex items-center justify-between mb-8">
           <h2 className="text-4xl font-bold text-white">
             <span className="text-white/80">Some of </span>
             <span className="bg-gradient-to-r from-pink-500 to-orange-400 bg-clip-text text-transparent">My Work</span>
