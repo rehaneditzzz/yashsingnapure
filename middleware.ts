@@ -1,31 +1,33 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPublicRoute = createRouteMatcher([
-  '/sign-in(.*)',
-  '/sign-up(.*)',
+  "/sign-in(.*)",
+  "/sign-up(.*)",
 ]);
 
-export default clerkMiddleware((auth, req) => {
-  // Allow public routes
+export default clerkMiddleware(async (auth, req) => {
   if (isPublicRoute(req)) return;
 
-  // Protect all private routes
-  auth().protect();
+  const { sessionId, sessionClaims } = await auth();
 
-  // Role-based access for /admin
-  if (req.nextUrl.pathname.startsWith('/admin')) {
-    const { sessionClaims } = auth();
-    const role = (sessionClaims?.publicMetadata as { role?: string })?.role;
+  // If no session, block access
+  if (!sessionId || !sessionClaims) {
+    return new Response("Unauthorized", { status: 401 });
+  }
 
-    if (role !== 'admin') {
-      return new Response('Unauthorized', { status: 403 });
+  const role = (sessionClaims.publicMetadata as { role?: string })?.role;
+
+  // Role-based restriction
+  if (req.nextUrl.pathname.startsWith("/admin")) {
+    if (role !== "admin") {
+      return new Response("Unauthorized", { status: 403 });
     }
   }
 });
 
 export const config = {
   matcher: [
-    '/((?!_next|.*\\..*).*)',
-    '/(api|trpc)(.*)',
+    "/((?!_next|.*\\..*).*)",
+    "/(api|trpc)(.*)",
   ],
 };
