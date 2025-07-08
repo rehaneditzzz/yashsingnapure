@@ -1,7 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 const isPublicRoute = createRouteMatcher([
-  '/', // ✅ Home page is now public
   '/sign-in(.*)',
   '/sign-up(.*)',
 ]);
@@ -9,7 +8,7 @@ const isPublicRoute = createRouteMatcher([
 export default clerkMiddleware(async (auth, req) => {
   if (isPublicRoute(req)) return;
 
-  const { sessionClaims } = await auth();
+  const { sessionClaims } = await auth(); // 👈 Wait for session
 
   const role = (sessionClaims?.publicMetadata as { role?: string })?.role;
 

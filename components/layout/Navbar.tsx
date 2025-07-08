@@ -19,7 +19,7 @@ import { useContactModal } from "@/lib/store/contactModalStore";
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(false);
   const { user } = useUser();
-const isAdmin = user?.id === process.env.NEXT_PUBLIC_ADMIN_ID;
+const isAdmin = user?.publicMetadata?.role === "admin";
 
     const { openModal } = useContactModal();
 
