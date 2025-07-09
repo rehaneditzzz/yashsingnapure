@@ -46,3 +46,25 @@ export async function POST(req: Request) {
     );
   }
 }
+
+
+
+
+export async function DELETE(req: Request) {
+  try {
+    const { id } = await req.json();
+
+    if (!id) {
+      return NextResponse.json({ error: "ID is required." }, { status: 400 });
+    }
+
+    await prisma.contact.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting contact:", error);
+    return NextResponse.json({ error: "Failed to delete contact." }, { status: 500 });
+  }
+}

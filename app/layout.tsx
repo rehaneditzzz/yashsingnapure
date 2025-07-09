@@ -6,6 +6,7 @@ import { dark, shadesOfPurple } from "@clerk/themes";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import ClientWrapper from "@/components/layout/ClientWrapper";
+import { Toaster } from "react-hot-toast";
 
 // const inter = Inter({ subsets: ['latin'] });
 
@@ -38,9 +39,10 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang="en" className={poppins.className}>
+      <html lang="en" className={`${poppins.className} overflow-x-hidden overflow-y-auto`}>
         <body>
           {children}
+    <Toaster position="top-right" />
 
           <ClientWrapper/>
         </body>

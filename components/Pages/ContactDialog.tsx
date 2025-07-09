@@ -12,11 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { useContactModal } from "@/lib/store/contactModalStore";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { X } from "lucide-react";
+import toast from "react-hot-toast"; // ✅ toast added
 
 const schema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -35,12 +35,24 @@ export default function ContactDialog() {
   } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = async (data: any) => {
-    await fetch("/api/contact", {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-    reset();
-    closeModal();
+    const toastId = toast.loading("Sending message...");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+
+      toast.success("Message sent successfully!", { id: toastId });
+      reset();
+      closeModal();
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to send message", { id: toastId });
+    }
   };
 
   return (
